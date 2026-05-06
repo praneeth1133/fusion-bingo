@@ -59,18 +59,17 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
   #card-display { margin-top: 28px; display: none; }
-  #card-display img {
-    max-width: 100%;
-    max-height: 420px;
-    border-radius: 14px;
-    box-shadow: 0 4px 24px rgba(27,42,74,0.15);
-    margin-bottom: 16px;
-  }
   .card-label {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 14px;
+    font-size: 64px;
+    font-weight: 800;
+    margin-bottom: 6px;
     color: #E8734A;
+    line-height: 1;
+  }
+  .card-sublabel {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
   }
   .btn-download {
     display: inline-block;
@@ -105,9 +104,8 @@
 
     <div id="card-display">
       <p class="card-label" id="card-label"></p>
-      <img id="card-img" alt="Your Bingo Card" />
-      <br/>
-      <a class="btn-download" id="download-link" target="_blank">Open Card</a>
+      <p class="card-sublabel">is your bingo card!</p>
+      <a class="btn-download" id="download-link" target="_blank">Open Your Card</a>
       <div class="pick-again">
         <button class="btn-pick" onclick="pickCard()">Pick Another Card</button>
       </div>
@@ -119,14 +117,10 @@
   var TOTAL_CARDS = 75;
 
   function pickCard() {
-    var spinner = document.getElementById('spinner');
-    var errEl = document.getElementById('err');
     var cardDisplay = document.getElementById('card-display');
     var initialView = document.getElementById('initial-view');
 
     initialView.style.display = 'none';
-    spinner.style.display = 'block';
-    errEl.textContent = '';
     cardDisplay.style.display = 'none';
 
     var buf = new Uint32Array(1);
@@ -135,19 +129,9 @@
 
     var imgUrl = BASE_URL + cardNum + '.png';
 
-    var img = document.getElementById('card-img');
-    img.onload = function() {
-      spinner.style.display = 'none';
-      document.getElementById('card-label').textContent = 'Card #' + cardNum;
-      document.getElementById('download-link').href = imgUrl;
-      cardDisplay.style.display = 'block';
-    };
-    img.onerror = function() {
-      spinner.style.display = 'none';
-      initialView.style.display = 'block';
-      errEl.textContent = 'Could not load card #' + cardNum + '. Please try again.';
-    };
-    img.src = imgUrl;
+    document.getElementById('card-label').textContent = '#' + cardNum;
+    document.getElementById('download-link').href = imgUrl;
+    cardDisplay.style.display = 'block';
   }
 </script>
 </body>
